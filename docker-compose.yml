@@ -1,16 +1,19 @@
+version: '3'
+
 services:
   flask_app:
     container_name: flask_app
     image: olatunde2/flask_live_app:1.0.0
-    build: ./server
+    build:
+      context: ./server  # This should point to the server directory for the Flask app
     ports:
       - "5000:5000"
     env_file:
       - ./server/.env
     environment:
-      - DB_URL=postgresql://postgres:postgres@postgres:5432/postgres
+      - DB_URL=postgresql://postgres:postgres@flask_db:5432/postgres  # Ensure the DB URL is correct
     volumes:
-      - .:/run
+      - .:/run  # Adjust volume if needed
     depends_on:
       - flask_db
     networks:
@@ -31,7 +34,7 @@ services:
       - app_network
 
   clients:
-    build: ./clients
+    build: ./clients  # This points to the React app directory
     container_name: react_app
     restart: always
     ports:
@@ -39,7 +42,7 @@ services:
     depends_on:
       - flask_app
     environment:
-      - REACT_APP_API_URL=http://flask_app:5000/api/v1
+      - REACT_APP_API_URL=http://flask_app:5000/api/v1  # API URL to Flask app
     networks:
       - app_network
 
