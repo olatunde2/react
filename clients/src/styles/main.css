@@ -1,0 +1,17 @@
+.container {
+  margin-top: 50px;
+}
+
+.heading {
+  /* font-weight: 800; */
+  font-size: 3rem;
+}
+
+.form {
+  margin: auto;
+  width: 70%;
+}
+
+.recipe {
+  margin-top: 25px;
+}
